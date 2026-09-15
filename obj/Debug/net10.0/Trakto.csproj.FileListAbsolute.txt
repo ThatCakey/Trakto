@@ -90,3 +90,4 @@
 /home/cakey/Documents/Projects/Trakto/obj/Debug/net10.0/Trakto.pdb
 /home/cakey/Documents/Projects/Trakto/obj/Debug/net10.0/Trakto.genruntimeconfig.cache
 /home/cakey/Documents/Projects/Trakto/obj/Debug/net10.0/ref/Trakto.dll
+/home/cakey/Documents/Projects/Trakto/obj/Debug/net10.0/Trakto.sourcelink.json

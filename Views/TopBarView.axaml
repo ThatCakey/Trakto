@@ -2,8 +2,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:Trakto.ViewModels"
+             xmlns:sys="using:System"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="35"
-             x:Class="Trakto.Views.TopBarView">
+             x:Class="Trakto.Views.TopBarView"
+             x:DataType="vm:MainWindowViewModel">
     <Grid Background="#2b2d30" Height="35" PointerPressed="OnPointerPressed">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -40,8 +43,19 @@
                 <MenuItem Header="_Performance Monitor" />
             </MenuItem>
             <MenuItem Header="_Layout" Foreground="White">
-                <MenuItem Header="_Load" />
-                <MenuItem Header="_Save" />
+                <MenuItem Header="_Save Layout..." Command="{Binding SaveLayoutCommand}" />
+                <Separator />
+                <MenuItem x:Name="RecentLayoutsMenu" Header="_Recent Layouts" ItemsSource="{Binding RecentLayouts}">
+                    <MenuItem.Styles>
+                        <Style Selector="MenuItem#RecentLayoutsMenu > MenuItem" x:DataType="sys:String">
+                            <Setter Property="Header" Value="{Binding}" />
+                            <Setter Property="Command" Value="{ReflectionBinding $parent[UserControl].DataContext.LoadRecentLayoutCommand}" />
+                            <Setter Property="CommandParameter" Value="{Binding}" />
+                        </Style>
+                    </MenuItem.Styles>
+                </MenuItem>
+                <MenuItem Header="_Load from file..." Command="{Binding LoadLayoutCommand}" />
+                <Separator />
                 <MenuItem Header="_Reset" />
             </MenuItem>
             <MenuItem Header="_Settings" Foreground="White">

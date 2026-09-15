@@ -14,7 +14,7 @@
         </Style>
     </UserControl.Styles>
     
-    <Border Background="#252526" BorderBrush="#3e3e42" BorderThickness="1" CornerRadius="4" Margin="2">
+    <Border Background="#1d1e20" BorderBrush="#171718" BorderThickness="1" CornerRadius="4" Margin="2">
         <Grid Background="Transparent">
             <Grid.ContextMenu>
                 <ContextMenu>

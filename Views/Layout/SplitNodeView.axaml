@@ -15,9 +15,9 @@
         <!-- Horizontal Split (Left and Right) -->
         <Grid IsVisible="{Binding IsHorizontal}">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="{Binding FirstSize, Mode=TwoWay}" />
                 <ColumnDefinition Width="4" />
-                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="{Binding SecondSize, Mode=TwoWay}" />
             </Grid.ColumnDefinitions>
             
             <ContentControl Grid.Column="0" Content="{Binding FirstChild}" />
@@ -28,9 +28,9 @@
         <!-- Vertical Split (Top and Bottom) -->
         <Grid IsVisible="{Binding IsVertical}">
             <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
+                <RowDefinition Height="{Binding FirstSize, Mode=TwoWay}" />
                 <RowDefinition Height="4" />
-                <RowDefinition Height="*" />
+                <RowDefinition Height="{Binding SecondSize, Mode=TwoWay}" />
             </Grid.RowDefinitions>
             
             <ContentControl Grid.Row="0" Content="{Binding FirstChild}" />

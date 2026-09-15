@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Trakto")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bdadd1d51aebe5487d63202ce34ac4d63210de6a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a32518c0177e0b9d8853c26859a36a43b74c168d")]
 [assembly: System.Reflection.AssemblyProductAttribute("Trakto")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Trakto")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

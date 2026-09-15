@@ -3,11 +3,16 @@ using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Avalonia.Layout;
+using Avalonia.Controls;
+using System.Text.Json.Serialization;
 
 namespace Trakto.ViewModels.Layout;
 
+[JsonDerivedType(typeof(SplitNode), typeDiscriminator: "split")]
+[JsonDerivedType(typeof(LeafNode), typeDiscriminator: "leaf")]
 public abstract partial class LayoutNode : ObservableObject
 {
+    [JsonIgnore]
     public SplitNode? Parent { get; set; }
 }
 
@@ -24,8 +29,33 @@ public partial class SplitNode : LayoutNode
     [NotifyPropertyChangedFor(nameof(IsVertical))]
     private Orientation _orientation;
 
+    [ObservableProperty]
+    [property: JsonIgnore]
+    private GridLength _firstSize = new GridLength(1, GridUnitType.Star);
+
+    [ObservableProperty]
+    [property: JsonIgnore]
+    private GridLength _secondSize = new GridLength(1, GridUnitType.Star);
+
+    public string FirstSizeString
+    {
+        get => FirstSize.ToString();
+        set => FirstSize = GridLength.Parse(value);
+    }
+
+    public string SecondSizeString
+    {
+        get => SecondSize.ToString();
+        set => SecondSize = GridLength.Parse(value);
+    }
+
     public bool IsHorizontal => Orientation == Orientation.Horizontal;
     public bool IsVertical => Orientation == Orientation.Vertical;
+
+    public SplitNode()
+    {
+        // Parameterless constructor for JSON deserialization
+    }
 
     public SplitNode(LayoutNode first, LayoutNode second, Orientation orientation)
     {
@@ -60,6 +90,7 @@ public partial class PanelContent : ObservableObject
     [ObservableProperty]
     private object? _content;
 
+    [JsonIgnore]
     public LeafNode? Parent { get; set; }
 
     [RelayCommand]
@@ -77,7 +108,10 @@ public partial class LeafNode : LayoutNode
     [ObservableProperty]
     private PanelContent? _selectedTab;
 
+    [JsonIgnore]
     public Action<LeafNode, Orientation>? SplitRequested { get; set; }
+    
+    [JsonIgnore]
     public Action<LeafNode>? CloseRequested { get; set; }
 
     [RelayCommand]
