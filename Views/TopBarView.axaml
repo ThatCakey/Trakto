@@ -1,0 +1,66 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="35"
+             x:Class="Trakto.Views.TopBarView">
+    <Grid Background="#2b2d30" Height="35" PointerPressed="OnPointerPressed">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        
+        <Menu Grid.Column="0" Background="Transparent" VerticalAlignment="Center">
+            <MenuItem Header="_File" Foreground="White">
+                <MenuItem Header="_New Project" />
+                <MenuItem Header="_Open..." />
+                <Separator />
+                <MenuItem Header="_Save" />
+                <MenuItem Header="Save _As..." />
+                <Separator />
+                <MenuItem Header="_Export">
+                    <MenuItem Header="Quick Export" />
+                    <MenuItem Header="Export Options" />
+                    <MenuItem Header="Export as..." />
+                </MenuItem>
+                <Separator />
+                <MenuItem Header="E_xit" Click="CloseButton_Click" />
+            </MenuItem>
+            <MenuItem Header="_Edit" Foreground="White">
+                <MenuItem Header="_Undo" />
+                <MenuItem Header="_Redo" />
+                <Separator />
+                <MenuItem Header="Cu_t" />
+                <MenuItem Header="_Copy" />
+                <MenuItem Header="_Paste" />
+            </MenuItem>
+            <MenuItem Header="_Tools" Foreground="White">
+                <MenuItem Header="_Options" />
+                <MenuItem Header="_Extensions" />
+                <MenuItem Header="_Performance Monitor" />
+            </MenuItem>
+            <MenuItem Header="_Layout" Foreground="White">
+                <MenuItem Header="_Load" />
+                <MenuItem Header="_Save" />
+                <MenuItem Header="_Reset" />
+            </MenuItem>
+            <MenuItem Header="_Settings" Foreground="White">
+                <MenuItem Header="_Preferences" />
+                <MenuItem Header="_Theme" />
+                <MenuItem Header="_Keybindings" />
+            </MenuItem>
+            <MenuItem Header="_Help" Foreground="White">
+                <MenuItem Header="_Documentation" />
+                <MenuItem Header="_Check for Updates" />
+                <Separator />
+                <MenuItem Header="_About Trakto" />
+            </MenuItem>
+        </Menu>
+        
+        <StackPanel Grid.Column="1" Orientation="Horizontal">
+            <Button Content="-" Width="35" Height="35" Background="Transparent" Foreground="White" BorderThickness="0" CornerRadius="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Click="MinimizeButton_Click"/>
+            <Button Content="□" Width="35" Height="35" Background="Transparent" Foreground="White" BorderThickness="0" CornerRadius="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Click="MaximizeButton_Click"/>
+            <Button Content="✕" Width="35" Height="35" Background="Transparent" Foreground="White" BorderThickness="0" CornerRadius="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Click="CloseButton_Click"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

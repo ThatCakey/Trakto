@@ -1,0 +1,41 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Trakto.ViewModels.Layout"
+             xmlns:layout="using:Avalonia.Layout"
+             x:Class="Trakto.Views.Layout.SplitNodeView"
+             x:DataType="vm:SplitNode">
+             
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <!-- A simple converter to check orientation -->
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Panel>
+        <!-- Horizontal Split (Left and Right) -->
+        <Grid IsVisible="{Binding IsHorizontal}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="4" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            
+            <ContentControl Grid.Column="0" Content="{Binding FirstChild}" />
+            <GridSplitter Grid.Column="1" Background="#3e3e42" ResizeDirection="Columns" />
+            <ContentControl Grid.Column="2" Content="{Binding SecondChild}" />
+        </Grid>
+
+        <!-- Vertical Split (Top and Bottom) -->
+        <Grid IsVisible="{Binding IsVertical}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="4" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            
+            <ContentControl Grid.Row="0" Content="{Binding FirstChild}" />
+            <GridSplitter Grid.Row="1" Background="#3e3e42" ResizeDirection="Rows" />
+            <ContentControl Grid.Row="2" Content="{Binding SecondChild}" />
+        </Grid>
+    </Panel>
+</UserControl>

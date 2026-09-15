@@ -1,22 +1,28 @@
-<Window xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:vm="using:Trakto.ViewModels"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-        x:Class="Trakto.Views.MainWindow"
-        x:DataType="vm:MainViewModel"
-        Icon="/Assets/avalonia-logo.ico"
-        Title="Trakto">
+<Window
+    x:Class="Trakto.Views.MainWindow"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:Trakto.ViewModels"
+    xmlns:views="using:Trakto.Views"
+    xmlns:layout="using:Trakto.ViewModels.Layout"
+    Title="Trakto"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    x:DataType="vm:MainWindowViewModel"
+    Background="#1d1e20"
+    Icon="/Assets/avalonia-logo.ico"
+    WindowDecorations="None"
+    mc:Ignorable="d">
 
     <Design.DataContext>
-        <!-- This only sets the DataContext for the previewer in an IDE,
-             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
-        <vm:MainViewModel />
+        <vm:MainWindowViewModel />
     </Design.DataContext>
 
-    <TextBox Text="{Binding Greeting}"
-             HorizontalAlignment="Center"
-             VerticalAlignment="Center" />
+    <DockPanel>
+        <views:TopBarView DockPanel.Dock="Top" />
+        <ContentControl Content="{Binding RootLayout}" />
+    </DockPanel>
 
 </Window>

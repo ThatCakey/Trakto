@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net10.0</TargetFramework>
@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <Folder Include="Models\" />
+    <Folder Include="Views\" />
     <AvaloniaResource Include="Assets\**" />
   </ItemGroup>
 

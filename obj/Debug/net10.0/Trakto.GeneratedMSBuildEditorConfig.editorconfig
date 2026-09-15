@@ -9,7 +9,7 @@ build_property.AvaloniaNameGeneratorAttachDevTools = true
 build_property.AvaloniaUseCompiledBindingsByDefault = true
 build_property.AvaloniaMainPackageVersion = 12.1.2
 build_property.AvaloniaPreviewerNetCoreToolPath = /home/cakey/.nuget/packages/avalonia/12.1.2/buildTransitive//../tools/net8.0/designer/Avalonia.Designer.HostApp.dll
-build_property.AvaloniaResourcePaths = /home/cakey/Documents/Projects/Trakto/Assets/avalonia-logo.ico,/home/cakey/Documents/Projects/Trakto/App.axaml,/home/cakey/Documents/Projects/Trakto/Views/MainWindow.axaml
+build_property.AvaloniaResourcePaths = /home/cakey/Documents/Projects/Trakto/Assets/avalonia-logo.ico,/home/cakey/Documents/Projects/Trakto/App.axaml,/home/cakey/Documents/Projects/Trakto/Views/Layout/LeafNodeView.axaml,/home/cakey/Documents/Projects/Trakto/Views/Layout/SplitNodeView.axaml,/home/cakey/Documents/Projects/Trakto/Views/MainWindow.axaml,/home/cakey/Documents/Projects/Trakto/Views/TopBarView.axaml
 build_property.MvvmToolkitEnableINotifyPropertyChangingSupport = true
 build_property._MvvmToolkitIsUsingWindowsRuntimePack = false
 build_property.CsWinRTComponent = 
@@ -35,5 +35,14 @@ build_property.EnableCodeStyleSeverity =
 [/home/cakey/Documents/Projects/Trakto/App.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
+[/home/cakey/Documents/Projects/Trakto/Views/Layout/LeafNodeView.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[/home/cakey/Documents/Projects/Trakto/Views/Layout/SplitNodeView.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
 [/home/cakey/Documents/Projects/Trakto/Views/MainWindow.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[/home/cakey/Documents/Projects/Trakto/Views/TopBarView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml

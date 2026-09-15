@@ -1,0 +1,67 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Trakto.ViewModels.Layout"
+             x:Class="Trakto.Views.Layout.LeafNodeView"
+             x:DataType="vm:LeafNode">
+             
+    <UserControl.Styles>
+        <Style Selector="TabItem">
+            <Setter Property="MinHeight" Value="35" />
+            <Setter Property="Height" Value="35" />
+            <Setter Property="Padding" Value="12,0" />
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+    </UserControl.Styles>
+    
+    <Border Background="#252526" BorderBrush="#3e3e42" BorderThickness="1" CornerRadius="4" Margin="2">
+        <Grid Background="Transparent">
+            <Grid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Set View...">
+                        <MenuItem Header="Timeline" Command="{Binding SetViewCommand}" CommandParameter="Timeline" />
+                        <MenuItem Header="Preview" Command="{Binding SetViewCommand}" CommandParameter="Preview" />
+                        <MenuItem Header="Media Library" Command="{Binding SetViewCommand}" CommandParameter="Media Library" />
+                        <MenuItem Header="Properties" Command="{Binding SetViewCommand}" CommandParameter="Properties" />
+                        <MenuItem Header="Effects" Command="{Binding SetViewCommand}" CommandParameter="Effects" />
+                    </MenuItem>
+                    <Separator />
+                    <MenuItem Header="New Tab" Command="{Binding AddTabCommand}" />
+                    <Separator />
+                    <MenuItem Header="Split Horizontally" Command="{Binding SplitHorizontalCommand}" />
+                    <MenuItem Header="Split Vertically" Command="{Binding SplitVerticalCommand}" />
+                    <Separator />
+                    <MenuItem Header="Close Panel" Command="{Binding CloseCommand}" />
+                </ContextMenu>
+            </Grid.ContextMenu>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            
+            <TabControl ItemsSource="{Binding Tabs}" SelectedItem="{Binding SelectedTab}" Background="Transparent">
+                <TabControl.ItemTemplate>
+                    <DataTemplate x:DataType="vm:PanelContent">
+                        <StackPanel Orientation="Horizontal" Spacing="5">
+                            <TextBlock Text="{Binding Title}" VerticalAlignment="Center" />
+                            <Button Content="✕" 
+                                    Command="{Binding CloseCommand}" 
+                                    Background="Transparent" 
+                                    Foreground="LightGray" 
+                                    BorderThickness="0" 
+                                    Padding="2" 
+                                    Margin="5,0,0,0" 
+                                    FontSize="10" 
+                                    Cursor="Hand" />
+                        </StackPanel>
+                    </DataTemplate>
+                </TabControl.ItemTemplate>
+                <TabControl.ContentTemplate>
+                    <DataTemplate x:DataType="vm:PanelContent">
+                        <TextBlock Text="{Binding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" />
+                    </DataTemplate>
+                </TabControl.ContentTemplate>
+            </TabControl>
+        </Grid>
+    </Border>
+
+</UserControl>
