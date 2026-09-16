@@ -1,0 +1,62 @@
+name: Linux Nightly Build
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+# Grant permissions needed to create and update GitHub Releases
+permissions:
+  contents: write
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Install .NET Core
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+
+    - name: Restore dependencies
+      run: dotnet restore Trakto.csproj
+
+    # Optional: Run tests if you have a test project later
+    - name: Execute unit tests
+      run: dotnet test --no-restore
+      continue-on-error: true 
+
+    # Publishes a single-file, self-contained Linux executable
+    - name: Publish Linux Native Build
+      run: dotnet publish Trakto.csproj -c Release -r linux-x64 --self-contained true -p:PublishSingleFile=true -o ./publish
+
+    # Zip the application so it can be uploaded as an artifact/release asset
+    - name: Compress Build Output
+      run: tar -czvf Trakto-linux-x64-nightly.tar.gz -C ./publish .
+
+    # Update the 'nightly' Git tag to point to the latest commit
+    - name: Update Nightly Tag
+      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      run: |
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+        git tag -f nightly
+        git push origin nightly --force
+
+    # Create or update the Nightly GitHub Release and upload the tarball
+    - name: Publish Nightly Release
+      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      uses: softprops/action-gh-release@v2
+      with:
+        tag_name: nightly
+        name: "Nightly Build"
+        prerelease: true
+        files: Trakto-linux-x64-nightly.tar.gz
+        body: "Automated nightly build for Linux."
