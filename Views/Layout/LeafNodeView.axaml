@@ -57,7 +57,7 @@
                 </TabControl.ItemTemplate>
                 <TabControl.ContentTemplate>
                     <DataTemplate x:DataType="vm:PanelContent">
-                        <TextBlock Text="{Binding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" />
+                        <ContentControl Content="{Binding Content}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
                     </DataTemplate>
                 </TabControl.ContentTemplate>
             </TabControl>

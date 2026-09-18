@@ -88,7 +88,21 @@ public partial class PanelContent : ObservableObject
     private string _title = "New Tab";
 
     [ObservableProperty]
+    private string _viewType = "Empty";
+
+    [ObservableProperty]
+    [property: JsonIgnore]
     private object? _content;
+
+    public void ResolveView()
+    {
+        string actualType = ViewType == "Empty" ? Title : ViewType;
+        
+        // When real views are created, map them here:
+        // if (actualType == "Timeline") Content = new TimelineView();
+        
+        Content = $"This is the {actualType} view.";
+    }
 
     [JsonIgnore]
     public LeafNode? Parent { get; set; }
@@ -158,7 +172,8 @@ public partial class LeafNode : LayoutNode
         if (SelectedTab != null)
         {
             SelectedTab.Title = viewType;
-            SelectedTab.Content = $"This is the {viewType} view.";
+            SelectedTab.ViewType = viewType;
+            SelectedTab.ResolveView();
         }
     }
 }

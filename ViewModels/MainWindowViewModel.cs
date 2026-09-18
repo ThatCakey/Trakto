@@ -50,6 +50,7 @@ public partial class MainWindowViewModel : ViewModelBase
         foreach (var tab in leaf.Tabs)
         {
             tab.Parent = leaf;
+            tab.ResolveView();
         }
     }
 
