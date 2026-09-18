@@ -1,0 +1,10 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Trakto.ViewModels"
+             x:Class="Trakto.Views.PreviewView"
+             x:DataType="vm:PreviewViewModel">
+    <Grid Background="Black">
+        <!-- The Preview Image rendered by Visive -->
+        <Image Source="{Binding PreviewImage}" Stretch="Uniform" />
+    </Grid>
+</UserControl>
