@@ -16,7 +16,6 @@ The UI utilizes a custom Binary Space Partitioning (BSP) window manager implemen
 The `Visive` project is a dedicated C# backend engine that drives video processing.
 - **VideoObject:** The core composition unit. Handles timeline slicing, clip appending, overlay stacking, and effect chaining.
 - **FrameObject:** Stores pixel data in a custom struct (10-bit RGB, 8-bit Alpha). Features a high-performance `WriteToBuffer` method that down-shifts memory into a flat 8-bit RGBA byte array.
-- **Rendering Bridge:** Trakto utilizes `Marshal.Copy` to directly pass Visive's flat 8-bit RGBA byte array into Avalonia's `WriteableBitmap` backbuffer memory, achieving fast, I/O-free frame rendering.
 - **FFmpeg Integration:** Relies on FFmpeg sub-processes for initial decoding, extraction, and final media export.
 
 ## Development
