@@ -30,15 +30,48 @@ public partial class PreviewViewModel : ObservableObject
         }
     }
 
+    private System.Threading.CancellationTokenSource? _debounceCts;
+
     private void UpdatePreview()
     {
         if (_session.MainTimeline == null) return;
         
-        // Use Visive to fetch the preview frame (at 50% quality for performance during scrubber)
-        var frameObj = _session.MainTimeline.GetPreviewFrame(_session.CurrentTime, 0.5f);
+        bool isPlaying = _session.IsPlaying;
+        
+        // If we are NOT playing (scrubbing/seeking), use keyframeOnly = true for speed.
+        // If we are playing, use keyframeOnly = false for smooth playback, and quality = 1.0f to avoid slow CPU resizing.
+        var frameObj = _session.MainTimeline.GetPreviewFrame(_session.CurrentTime, isPlaying ? 1.0f : 0.5f, !isPlaying);
         if (frameObj != null && frameObj.loaded)
         {
             PreviewImage = VisiveBridge.FrameToBitmap(frameObj);
+        }
+
+        // Debounce high-quality fetch (and prefetch trigger) when paused/scrubbing
+        _debounceCts?.Cancel();
+        if (!isPlaying)
+        {
+            _debounceCts = new System.Threading.CancellationTokenSource();
+            var token = _debounceCts.Token;
+            float targetTime = _session.CurrentTime;
+            
+            System.Threading.Tasks.Task.Delay(300, token).ContinueWith(t => 
+            {
+                if (t.IsCanceled || _session.CurrentTime != targetTime) return;
+                
+                // Requesting a high-quality frame with keyframeOnly = false triggers 
+                // the background chunk extraction in Visive for this exact spot!
+                var hqFrame = _session.MainTimeline.GetPreviewFrame(targetTime, 1.0f, false);
+                if (hqFrame != null && hqFrame.loaded)
+                {
+                    Avalonia.Threading.Dispatcher.UIThread.InvokeAsync(() => 
+                    {
+                        if (!token.IsCancellationRequested && _session.CurrentTime == targetTime)
+                        {
+                            PreviewImage = VisiveBridge.FrameToBitmap(hqFrame);
+                        }
+                    });
+                }
+            });
         }
     }
 }
