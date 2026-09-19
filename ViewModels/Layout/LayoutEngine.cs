@@ -98,10 +98,18 @@ public partial class PanelContent : ObservableObject
     {
         string actualType = ViewType == "Empty" ? Title : ViewType;
         
-        // When real views are created, map them here:
-        // if (actualType == "Timeline") Content = new TimelineView();
-        
-        Content = $"This is the {actualType} view.";
+        if (actualType == "Preview") 
+        {
+            Content = new Trakto.Views.PreviewView();
+        }
+        else if (actualType == "Timeline")
+        {
+            Content = new Trakto.Views.TimelineView();
+        }
+        else 
+        {
+            Content = $"This is the {actualType} view.";
+        }
     }
 
     [JsonIgnore]

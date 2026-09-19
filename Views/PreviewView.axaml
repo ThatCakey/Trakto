@@ -3,8 +3,21 @@
              xmlns:vm="using:Trakto.ViewModels"
              x:Class="Trakto.Views.PreviewView"
              x:DataType="vm:PreviewViewModel">
-    <Grid Background="Black">
+    <Grid Background="#1d1e20" ColumnDefinitions="Auto,*">
+        <!-- Toolbar on the left -->
+        <Border Grid.Column="0" Background="#2b2d30" BorderBrush="#3f4146" BorderThickness="0,0,1,0" Padding="5">
+            <StackPanel Orientation="Vertical" Spacing="5">
+                <Button Content="↖️" Width="32" Height="32" ToolTip.Tip="Select Tool" Background="Transparent" Foreground="LightGray" BorderThickness="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                <Button Content="✋" Width="32" Height="32" ToolTip.Tip="Pan Tool" Background="Transparent" Foreground="LightGray" BorderThickness="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                <Button Content="✂️" Width="32" Height="32" ToolTip.Tip="Slice Tool" Background="Transparent" Foreground="LightGray" BorderThickness="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                <Button Content="T" Width="32" Height="32" ToolTip.Tip="Text Tool" Background="Transparent" Foreground="LightGray" FontWeight="Bold" BorderThickness="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                <Button Content="🔍" Width="32" Height="32" ToolTip.Tip="Zoom Tool" Background="Transparent" Foreground="LightGray" BorderThickness="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+            </StackPanel>
+        </Border>
+
         <!-- The Preview Image rendered by Visive -->
-        <Image Source="{Binding PreviewImage}" Stretch="Uniform" />
+        <Border Grid.Column="1" Background="Black">
+            <Image Source="{Binding PreviewImage}" Stretch="Uniform" />
+        </Border>
     </Grid>
 </UserControl>
