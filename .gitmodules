@@ -1,3 +1,6 @@
 [submodule "Visive"]
 	path = Visive
 	url = https://github.com/ThatCakey/Visive.git
+[submodule "Aural"]
+	path = Aural
+	url = https://github.com/ThatCakey/Aural.git
