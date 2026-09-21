@@ -30,10 +30,17 @@ public partial class TimelineViewModel : ObservableObject
             if (_session.CurrentTime != value)
             {
                 _session.CurrentTime = value;
+                _lastTime = value;
                 OnPropertyChanged();
                 OnPropertyChanged(nameof(PlayheadX));
             }
         }
+    }
+
+    public void ScrubTo(float time)
+    {
+        CurrentTime = time;
+        _session.NotifyScrubbed();
     }
 
     public bool IsPlaying
@@ -144,6 +151,12 @@ public partial class TimelineViewModel : ObservableObject
     {
         if (!IsPlaying) return;
         
+        if (_session.IsBuffering)
+        {
+            _stopwatch.Restart(); // Prevent time accumulation during buffer stall
+            return;
+        }
+
         float delta = (float)_stopwatch.Elapsed.TotalSeconds;
         _stopwatch.Restart();
         

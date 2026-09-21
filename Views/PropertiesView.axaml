@@ -1,0 +1,73 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Trakto.ViewModels"
+             xmlns:tvm="using:Trakto.ViewModels.Timeline"
+             x:Class="Trakto.Views.PropertiesView"
+             x:DataType="vm:PropertiesViewModel">
+
+    <Grid Background="#1d1e20" RowDefinitions="Auto,*">
+        <!-- Header -->
+        <Border Grid.Row="0" Background="#2b2d30" BorderBrush="#3f4146" BorderThickness="0,0,0,1" Padding="10">
+            <TextBlock Text="Properties" Foreground="LightGray" FontWeight="Bold" FontSize="14" />
+        </Border>
+
+        <!-- Content -->
+        <ScrollViewer Grid.Row="1" Padding="15">
+            <StackPanel Spacing="15">
+                
+                <!-- Nothing Selected -->
+                <TextBlock Text="No item selected." Foreground="Gray" FontStyle="Italic" 
+                           IsVisible="{Binding !IsClipSelected}" HorizontalAlignment="Center" Margin="0,20,0,0" />
+
+                <!-- Clip Properties -->
+                <!-- Clip Properties -->
+                <StackPanel IsVisible="{Binding IsClipSelected}">
+                    <StackPanel DataContext="{Binding SelectedClip}" x:DataType="tvm:TimelineClipViewModel">
+                        <!-- Note: DataContext is now TimelineClipViewModel when visible -->
+                        
+                        <TextBlock Text="Clip Properties" Foreground="White" FontWeight="SemiBold" FontSize="12" Margin="0,0,0,10" />
+
+                        <!-- Position -->
+                        <Border Background="#252627" BorderBrush="#3f4146" BorderThickness="1" CornerRadius="4" Padding="10" Margin="0,0,0,10">
+                            <StackPanel Spacing="10">
+                                <TextBlock Text="Transform" Foreground="LightGray" FontSize="11" FontWeight="Bold" />
+                                
+                                <Grid ColumnDefinitions="50,*,10,50,*">
+                                    <TextBlock Grid.Column="0" Text="X Pos" Foreground="#9aa0a6" VerticalAlignment="Center" FontSize="11" />
+                                    <NumericUpDown Grid.Column="1" Value="{Binding XPos}" FormatString="0.0" ShowButtonSpinner="False" 
+                                                   Background="#1a1b1c" Foreground="White" BorderBrush="#3f4146" Height="28" FontSize="11" />
+                                    
+                                    <TextBlock Grid.Column="3" Text="Y Pos" Foreground="#9aa0a6" VerticalAlignment="Center" FontSize="11" HorizontalAlignment="Right" Margin="0,0,5,0" />
+                                    <NumericUpDown Grid.Column="4" Value="{Binding YPos}" FormatString="0.0" ShowButtonSpinner="False" 
+                                                   Background="#1a1b1c" Foreground="White" BorderBrush="#3f4146" Height="28" FontSize="11" />
+                                </Grid>
+
+                                <Grid ColumnDefinitions="50,*,10,50,*">
+                                    <TextBlock Grid.Column="0" Text="Width" Foreground="#9aa0a6" VerticalAlignment="Center" FontSize="11" />
+                                    <NumericUpDown Grid.Column="1" Value="{Binding ClipWidth}" FormatString="0.0" ShowButtonSpinner="False" 
+                                                   Background="#1a1b1c" Foreground="White" BorderBrush="#3f4146" Height="28" FontSize="11" />
+                                    
+                                    <TextBlock Grid.Column="3" Text="Height" Foreground="#9aa0a6" VerticalAlignment="Center" FontSize="11" HorizontalAlignment="Right" Margin="0,0,5,0" />
+                                    <NumericUpDown Grid.Column="4" Value="{Binding ClipHeight}" FormatString="0.0" ShowButtonSpinner="False" 
+                                                   Background="#1a1b1c" Foreground="White" BorderBrush="#3f4146" Height="28" FontSize="11" />
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+                        
+                        <!-- General -->
+                        <Border Background="#252627" BorderBrush="#3f4146" BorderThickness="1" CornerRadius="4" Padding="10">
+                            <StackPanel Spacing="10">
+                                <TextBlock Text="General" Foreground="LightGray" FontSize="11" FontWeight="Bold" />
+                                
+                                <Grid ColumnDefinitions="50,*">
+                                    <TextBlock Grid.Column="0" Text="Name" Foreground="#9aa0a6" VerticalAlignment="Center" FontSize="11" />
+                                    <TextBox Grid.Column="1" Text="{Binding Name}" Background="#1a1b1c" Foreground="White" BorderBrush="#3f4146" Height="28" FontSize="11" Padding="5" />
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

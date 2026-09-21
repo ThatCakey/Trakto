@@ -8,14 +8,14 @@
     <Grid Background="#161718" RowDefinitions="Auto,*,Auto">
         
         <!-- Header: Toolbar & Play Controls -->
-        <Border Grid.Row="0" Background="#2b2d30" BorderBrush="#3f4146" BorderThickness="0,0,0,1" Padding="10,5">
+        <Border Grid.Row="0" Background="#2b2d30" BorderBrush="#3f4146" BorderThickness="0,0,0,1" Padding="5,5">
             <StackPanel Orientation="Horizontal" Spacing="10" HorizontalAlignment="Center">
                 <Button Content="⏮" Width="35" Height="30" Background="Transparent" Foreground="LightGray" BorderThickness="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
                 <Button Content="▶" Command="{Binding PlayCommand}" IsVisible="{Binding IsNotPlaying}" Width="35" Height="30" Background="Transparent" Foreground="White" BorderThickness="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
                 <Button Content="⏸" Command="{Binding PauseCommand}" IsVisible="{Binding IsPlaying}" Width="35" Height="30" Background="Transparent" Foreground="White" BorderThickness="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
                 <Button Content="⏭" Width="35" Height="30" Background="Transparent" Foreground="LightGray" BorderThickness="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
                 
-                <Separator Background="#3f4146" Margin="15,0" />
+                <Separator Background="#3f4146" Margin="0,0" />
                 <TextBlock Text="{Binding CurrentTime, StringFormat=\{0:F2\}s}" Foreground="White" VerticalAlignment="Center" Width="60" TextAlignment="Center" />
             </StackPanel>
         </Border>
@@ -113,7 +113,7 @@
         </ScrollViewer>
 
         <!-- Footer: Zoom Controls -->
-        <Border Grid.Row="2" Background="#2b2d30" BorderBrush="#3f4146" BorderThickness="0,1,0,0" Padding="10,5">
+        <Border Grid.Row="2" Background="#2b2d30" BorderBrush="#3f4146" BorderThickness="0,0.5,0,0" Padding="5,5">
             <StackPanel Orientation="Horizontal" Spacing="10" HorizontalAlignment="Right">
                 <TextBlock Text="Zoom:" Foreground="LightGray" VerticalAlignment="Center" />
                 <Slider Minimum="10" Maximum="500" Value="{Binding PixelsPerSecond, Mode=TwoWay}" Width="150" VerticalAlignment="Center" />

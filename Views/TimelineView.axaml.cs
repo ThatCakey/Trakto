@@ -8,6 +8,7 @@ namespace Trakto.Views;
 public partial class TimelineView : UserControl
 {
     private bool _isScrubbing = false;
+    private bool _wasPlayingBeforeScrub = false;
 
     public TimelineView()
     {
@@ -20,6 +21,12 @@ public partial class TimelineView : UserControl
         if (DataContext is TimelineViewModel vm)
         {
             _isScrubbing = true;
+            _wasPlayingBeforeScrub = vm.IsPlaying;
+            if (_wasPlayingBeforeScrub)
+            {
+                vm.Pause();
+            }
+
             e.Pointer.Capture(sender as IInputElement);
             
             var point = e.GetPosition(sender as Visual);
@@ -42,6 +49,11 @@ public partial class TimelineView : UserControl
         {
             _isScrubbing = false;
             e.Pointer.Capture(null);
+
+            if (_wasPlayingBeforeScrub && DataContext is TimelineViewModel vm)
+            {
+                vm.Play();
+            }
         }
     }
 
@@ -52,7 +64,7 @@ public partial class TimelineView : UserControl
         if (time < 0) time = 0;
         if (time > vm.MaxTime) time = vm.MaxTime;
         
-        vm.CurrentTime = (float)time;
+        vm.ScrubTo((float)time);
     }
 
     private void OnPointerWheelChanged(object? sender, PointerWheelEventArgs e)

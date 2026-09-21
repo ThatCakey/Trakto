@@ -20,6 +20,8 @@ public partial class MainWindowViewModel : ViewModelBase
     
     public ObservableCollection<string> RecentLayouts { get; } = new();
 
+    private readonly AudioEngine _audioEngine;
+
     public MainWindowViewModel()
     {
         var initialLeaf = new LeafNode();
@@ -31,6 +33,8 @@ public partial class MainWindowViewModel : ViewModelBase
         _rootLayout = initialLeaf;
         
         UpdateRecentLayouts();
+        
+        _audioEngine = new AudioEngine();
     }
     
     private void UpdateRecentLayouts()

@@ -14,8 +14,11 @@
 
   <ItemGroup>
     <Compile Remove="Visive\**" />
+    <Compile Remove="Aural\**" />
     <EmbeddedResource Remove="Visive\**" />
+    <EmbeddedResource Remove="Aural\**" />
     <None Remove="Visive\**" />
+    <None Remove="Aural\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -32,5 +35,6 @@
 
   <ItemGroup>
     <ProjectReference Include="Visive\Visive.csproj" />
+    <ProjectReference Include="Aural\src\Aural\Aural.csproj" />
   </ItemGroup>
 </Project>

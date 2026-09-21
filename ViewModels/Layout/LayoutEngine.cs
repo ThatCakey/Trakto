@@ -106,6 +106,14 @@ public partial class PanelContent : ObservableObject
         {
             Content = new Trakto.Views.TimelineView();
         }
+        else if (actualType == "Media Library")
+        {
+            Content = new Trakto.Views.MediaLibraryView { DataContext = new Trakto.ViewModels.MediaLibraryViewModel() };
+        }
+        else if (actualType == "Properties")
+        {
+            Content = new Trakto.Views.PropertiesView { DataContext = new Trakto.ViewModels.PropertiesViewModel() };
+        }
         else 
         {
             Content = $"This is the {actualType} view.";

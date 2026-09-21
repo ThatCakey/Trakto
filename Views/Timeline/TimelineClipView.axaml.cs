@@ -8,4 +8,13 @@ public partial class TimelineClipView : UserControl
     {
         InitializeComponent();
     }
+
+    private void OnPointerPressed(object? sender, Avalonia.Input.PointerPressedEventArgs e)
+    {
+        if (DataContext is Trakto.ViewModels.Timeline.TimelineClipViewModel vm)
+        {
+            vm.SelectClip();
+        }
+        e.Handled = true;
+    }
 }

@@ -21,6 +21,7 @@ public partial class PreviewViewModel : ObservableObject
     {
         _session = ProjectSession.Current;
         _session.PropertyChanged += OnSessionPropertyChanged;
+        _session.RefreshPreviewRequested += () => Avalonia.Threading.Dispatcher.UIThread.InvokeAsync(() => UpdatePreview());
         
         // Render initial frame
         UpdatePreview();
@@ -48,10 +49,11 @@ public partial class PreviewViewModel : ObservableObject
         // We pass allowSync = !isPlaying so that during playback, cache misses return null immediately instead of freezing the UI.
         try
         {
-            using (var frameObj = _session.MainTimeline.GetPreviewFrame(_session.CurrentTime, isPlaying ? 1.0f : 0.5f, !isPlaying, !isPlaying))
+            using (var frameObj = _session.MainTimeline.GetPreviewFrame(_session.CurrentTime, 1.0f, !isPlaying, !isPlaying))
             {
                 if (frameObj != null && frameObj.loaded)
                 {
+                    _session.IsBuffering = false;
                     var bitmap = _usePing ? _pingBitmap : _pongBitmap;
                     VisiveBridge.UpdateBitmap(ref bitmap, frameObj);
                     if (_usePing) _pingBitmap = bitmap;
@@ -60,6 +62,10 @@ public partial class PreviewViewModel : ObservableObject
 
                     PreviewImage = bitmap;
                     OnPropertyChanged(nameof(PreviewImage));
+                }
+                else if (isPlaying)
+                {
+                    _session.IsBuffering = true;
                 }
             }
         }
