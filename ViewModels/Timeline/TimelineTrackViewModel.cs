@@ -87,4 +87,15 @@ public partial class TimelineTrackViewModel : ObservableObject
         Clips.Remove(clipVm);
         session.NotifyScrubbed();
     }
+
+    public void TransferClipTo(TimelineClipViewModel clipVm, TimelineTrackViewModel newTrack)
+    {
+        if (this == newTrack) return;
+        
+        Clips.Remove(clipVm);
+        clipVm.ParentTrack = newTrack;
+        newTrack.Clips.Add(clipVm);
+        
+        ProjectSession.Current.NotifyScrubbed();
+    }
 }

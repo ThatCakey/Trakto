@@ -54,7 +54,7 @@
                 </Border>
 
                 <!-- Tracks -->
-                <ItemsControl Grid.Row="1" ItemsSource="{Binding Tracks}">
+                <ItemsControl x:Name="TracksControl" Grid.Row="1" ItemsSource="{Binding Tracks}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate x:DataType="tvm:TimelineTrackViewModel">
                             <!-- A single track -->

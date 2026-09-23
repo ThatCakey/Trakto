@@ -78,6 +78,8 @@ public partial class TimelineViewModel : ObservableObject
         // Initialize tracks
         var mainTrack = new Timeline.TimelineTrackViewModel("V1 (Main)");
         Tracks.Add(mainTrack);
+        Tracks.Add(new Timeline.TimelineTrackViewModel("V2"));
+        Tracks.Add(new Timeline.TimelineTrackViewModel("V3"));
         
         // Populate dummy clip if a timeline exists and has clips
         if (_session.MainTimeline != null && _session.MainTimeline.clips.Count > 0)
@@ -86,7 +88,8 @@ public partial class TimelineViewModel : ObservableObject
             {
                 mainTrack.Clips.Add(new Timeline.TimelineClipViewModel(clip, "Video Clip", _session.MainTimeline.fps) 
                 { 
-                    PixelsPerSecond = this.PixelsPerSecond 
+                    PixelsPerSecond = this.PixelsPerSecond,
+                    ParentTrack = mainTrack
                 });
             }
         }

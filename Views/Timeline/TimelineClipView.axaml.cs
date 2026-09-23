@@ -54,7 +54,34 @@ public partial class TimelineClipView : UserControl
             
             if (DataContext is Trakto.ViewModels.Timeline.TimelineClipViewModel vm)
             {
-                // Here we would finalize any multitrack transfer if the Y delta moved it to a new track
+                // Multitrack transfer
+                // Find TracksControl by walking up the visual tree
+                var control = this.Parent as Avalonia.Controls.Control;
+                Avalonia.Controls.ItemsControl? tracksControl = null;
+                while (control != null)
+                {
+                    if (control is Avalonia.Controls.ItemsControl ic && ic.Name == "TracksControl")
+                    {
+                        tracksControl = ic;
+                        break;
+                    }
+                    control = control.Parent as Avalonia.Controls.Control;
+                }
+
+                if (tracksControl != null && tracksControl.DataContext is Trakto.ViewModels.TimelineViewModel timelineVm)
+                {
+                    var point = e.GetPosition(tracksControl);
+                    int trackIndex = (int)(point.Y / 60); // 60 is the track height
+                    
+                    if (trackIndex >= 0 && trackIndex < timelineVm.Tracks.Count)
+                    {
+                        var newTrack = timelineVm.Tracks[trackIndex];
+                        if (vm.ParentTrack != null && newTrack != vm.ParentTrack)
+                        {
+                            vm.ParentTrack.TransferClipTo(vm, newTrack);
+                        }
+                    }
+                }
             }
         }
     }
