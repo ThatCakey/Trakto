@@ -31,7 +31,28 @@ public partial class TimelineClipViewModel : ObservableObject
     public double X => (_clip.TimelineStartFrame / _fps) * PixelsPerSecond;
     public double Width => (_clip.Length / _fps) * PixelsPerSecond;
     
-    public VideoClip BackendClip => _clip;
+    public VideoClip Clip => _clip;
+
+    public TimelineTrackViewModel? ParentTrack { get; set; }
+
+    public float StartTime
+    {
+        get => _clip.TimelineStartFrame / _fps;
+        set
+        {
+            float newTime = value;
+            if (newTime < 0) newTime = 0;
+            
+            uint newFrame = (uint)(newTime * _fps);
+            if (_clip.TimelineStartFrame != newFrame)
+            {
+                _clip.TimelineStartFrame = newFrame;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(X));
+                ProjectSession.Current.RequestPreviewRefresh();
+            }
+        }
+    }
 
     public float XPos
     {

@@ -76,7 +76,10 @@
                                     <ItemsControl ItemsSource="{Binding Clips}">
                                         <ItemsControl.ItemsPanel>
                                             <ItemsPanelTemplate>
-                                                <Canvas />
+                                                <Canvas DragDrop.AllowDrop="True"
+                                                        Background="Transparent"
+                                                        DragDrop.DragOver="OnTrackDragOver"
+                                                        DragDrop.Drop="OnTrackDrop" />
                                             </ItemsPanelTemplate>
                                         </ItemsControl.ItemsPanel>
                                         <ItemsControl.ItemTemplate>

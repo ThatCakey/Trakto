@@ -15,7 +15,9 @@
 
     <Border Background="#4d5382" Classes="clip" Classes.selected="{Binding IsSelected}" BorderThickness="1" CornerRadius="3" 
             Width="{Binding Width}" Height="40" VerticalAlignment="Center"
-            PointerPressed="OnPointerPressed">
+            PointerPressed="OnPointerPressed"
+            PointerMoved="OnPointerMoved"
+            PointerReleased="OnPointerReleased">
         <TextBlock Text="{Binding Name}" Foreground="White" FontSize="11" 
                    VerticalAlignment="Center" Margin="5,0,0,0" TextTrimming="CharacterEllipsis" />
     </Border>

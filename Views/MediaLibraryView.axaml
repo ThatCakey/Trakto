@@ -19,7 +19,8 @@
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate x:DataType="visive:VideoObject">
-                        <Border Background="#252627" BorderBrush="#3f4146" BorderThickness="1" CornerRadius="5" Width="120" Height="100" Margin="5" Padding="5">
+                        <Border Background="#252627" BorderBrush="#3f4146" BorderThickness="1" CornerRadius="5" Width="120" Height="100" Margin="5" Padding="5"
+                                PointerPressed="OnItemPointerPressed" PointerMoved="OnItemPointerMoved">
                             <Grid RowDefinitions="*,Auto">
                                 <!-- Thumbnail Placeholder -->
                                 <Border Grid.Row="0" Background="#1a1b1c" CornerRadius="3" Margin="0,0,0,5">

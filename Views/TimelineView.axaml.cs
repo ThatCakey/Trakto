@@ -94,4 +94,53 @@ public partial class TimelineView : UserControl
             }
         }
     }
+
+    private void OnTrackDragOver(object? sender, DragEventArgs e)
+    {
+        if (e.DataTransfer.Contains(MediaLibraryView.VideoObjectFormat))
+        {
+            e.DragEffects = DragDropEffects.Copy;
+            e.Handled = true;
+        }
+    }
+
+    private void OnTrackDrop(object? sender, DragEventArgs e)
+    {
+        if (e.DataTransfer.Contains(MediaLibraryView.VideoObjectFormat) && sender is Canvas canvas && canvas.DataContext is Trakto.ViewModels.Timeline.TimelineTrackViewModel trackVm)
+        {
+            var success = false;
+            object? obj = null;
+            try
+            {
+                // We use dynamic or reflection if we aren't sure of TryGetValue's signature
+                var items = e.DataTransfer.GetItems(MediaLibraryView.VideoObjectFormat);
+                if (items != null)
+                {
+                    foreach(var item in items)
+                    {
+                        // reflection to bypass signature mismatch issues
+                        var val = item.GetType().GetMethod("Get")?.Invoke(item, new object[] { MediaLibraryView.VideoObjectFormat });
+                        if (val is Visive.VideoObject)
+                        {
+                            obj = val;
+                            break;
+                        }
+                    }
+                }
+            }
+            catch {}
+
+            if (obj is Visive.VideoObject video)
+            {
+                if (DataContext is TimelineViewModel vm)
+                {
+                    var point = e.GetPosition(canvas);
+                    float startTime = (float)(point.X / vm.PixelsPerSecond);
+                    if (startTime < 0) startTime = 0;
+                    
+                    trackVm.AddClip(video, startTime);
+                }
+            }
+        }
+    }
 }
