@@ -108,29 +108,9 @@ public partial class TimelineView : UserControl
     {
         if (e.DataTransfer.Contains(MediaLibraryView.VideoObjectFormat) && sender is Canvas canvas && canvas.DataContext is Trakto.ViewModels.Timeline.TimelineTrackViewModel trackVm)
         {
-            var success = false;
-            object? obj = null;
-            try
-            {
-                // We use dynamic or reflection if we aren't sure of TryGetValue's signature
-                var items = e.DataTransfer.GetItems(MediaLibraryView.VideoObjectFormat);
-                if (items != null)
-                {
-                    foreach(var item in items)
-                    {
-                        // reflection to bypass signature mismatch issues
-                        var val = item.GetType().GetMethod("Get")?.Invoke(item, new object[] { MediaLibraryView.VideoObjectFormat });
-                        if (val is Visive.VideoObject)
-                        {
-                            obj = val;
-                            break;
-                        }
-                    }
-                }
-            }
-            catch {}
+            var video = e.DataTransfer.TryGetValue(MediaLibraryView.VideoObjectFormat);
 
-            if (obj is Visive.VideoObject video)
+            if (video != null)
             {
                 if (DataContext is TimelineViewModel vm)
                 {

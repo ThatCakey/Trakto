@@ -43,13 +43,29 @@ public partial class TimelineTrackViewModel : ObservableObject
         };
         session.MainTimeline.clips.Add(newClip);
         // Also add audio clip if it exists
-        session.MainTimeline.audioClips.Add(new Visive.AudioClip
+        Visive.AudioClip? newAudioClip = null;
+        if (video.audioClips.Count > 0)
         {
-            SourcePath = sourceClip.SourcePath,
-            SourceStartTime = 0f,
-            SourceEndTime = video.length,
-            TimelineStartTime = startTime
-        });
+            var sourceAudio = video.audioClips[0];
+            newAudioClip = new Visive.AudioClip
+            {
+                SourcePath = sourceAudio.SourcePath,
+                SourceStartTime = 0f,
+                SourceEndTime = video.length,
+                TimelineStartTime = startTime
+            };
+            session.MainTimeline.audioClips.Add(newAudioClip);
+        }
+
+        // Update timeline length if clip extends beyond it
+        float clipEndTime = startTime + video.length;
+        if (clipEndTime > session.MainTimeline.length)
+        {
+            session.MainTimeline.length = clipEndTime;
+        }
+
+        // Invalidate cache so that the timeline will re-render chunks containing the new clip
+        session.MainTimeline.InvalidateCache();
 
         // Create UI ViewModel
         double zoom = 100.0;
@@ -60,7 +76,7 @@ public partial class TimelineTrackViewModel : ObservableObject
             // Or use a default of 100.0 until it gets updated.
         }
         
-        var clipVm = new TimelineClipViewModel(newClip, video.Name, session.MainTimeline.fps)
+        var clipVm = new TimelineClipViewModel(newClip, newAudioClip, video.Name, session.MainTimeline.fps)
         {
             PixelsPerSecond = zoom,
             ParentTrack = this
@@ -85,6 +101,7 @@ public partial class TimelineTrackViewModel : ObservableObject
             }
         }
         Clips.Remove(clipVm);
+        session.MainTimeline?.InvalidateCache();
         session.NotifyScrubbed();
     }
 

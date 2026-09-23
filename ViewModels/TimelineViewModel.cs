@@ -1,3 +1,4 @@
+using System.Linq;
 using System;
 using System.ComponentModel;
 using Avalonia.Threading;
@@ -86,7 +87,9 @@ public partial class TimelineViewModel : ObservableObject
         {
             foreach (var clip in _session.MainTimeline.clips)
             {
-                mainTrack.Clips.Add(new Timeline.TimelineClipViewModel(clip, "Video Clip", _session.MainTimeline.fps) 
+                float startTime = clip.TimelineStartFrame / _session.MainTimeline.fps;
+                var audioClip = _session.MainTimeline.audioClips.FirstOrDefault(a => System.Math.Abs(a.TimelineStartTime - startTime) < 0.01f);
+                mainTrack.Clips.Add(new Timeline.TimelineClipViewModel(clip, audioClip, "Video Clip", _session.MainTimeline.fps) 
                 { 
                     PixelsPerSecond = this.PixelsPerSecond,
                     ParentTrack = mainTrack

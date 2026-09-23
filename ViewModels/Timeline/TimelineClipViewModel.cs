@@ -7,6 +7,7 @@ namespace Trakto.ViewModels.Timeline;
 public partial class TimelineClipViewModel : ObservableObject
 {
     private readonly VideoClip _clip;
+    private readonly AudioClip? _audioClip;
     private readonly float _fps;
 
     [ObservableProperty]
@@ -47,9 +48,15 @@ public partial class TimelineClipViewModel : ObservableObject
             if (_clip.TimelineStartFrame != newFrame)
             {
                 _clip.TimelineStartFrame = newFrame;
+                if (_audioClip != null)
+                {
+                    _audioClip.TimelineStartTime = newTime;
+                }
+                
                 OnPropertyChanged();
                 OnPropertyChanged(nameof(X));
                 ProjectSession.Current.RequestPreviewRefresh();
+                ProjectSession.Current.NotifyScrubbed();
             }
         }
     }
@@ -119,9 +126,10 @@ public partial class TimelineClipViewModel : ObservableObject
     [ObservableProperty]
     private bool _isSelected;
 
-    public TimelineClipViewModel(VideoClip clip, string name, float fps)
+    public TimelineClipViewModel(VideoClip clip, AudioClip? audioClip, string name, float fps)
     {
         _clip = clip;
+        _audioClip = audioClip;
         _name = name;
         _fps = fps;
 

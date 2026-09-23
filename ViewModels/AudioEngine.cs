@@ -224,8 +224,9 @@ public class AudioEngine : IDisposable
                     var clip = kvp.Key;
                     var stream = kvp.Value;
 
-                    // If clip ended, mark for removal
-                    if (session.CurrentTime >= clip.TimelineStartTime + clip.Length)
+                    // If clip ended or we scrubbed/dragged before its start, mark for removal
+                    if (session.CurrentTime >= clip.TimelineStartTime + clip.Length || 
+                        session.CurrentTime < clip.TimelineStartTime)
                     {
                         toRemove.Add(clip);
                         continue;
